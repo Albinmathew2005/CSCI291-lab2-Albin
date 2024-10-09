@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+ int milk_quantity = 0;
+ int water_quantity = 50 ;
+ int coffee_beans_quantity = 160;
+
+ float espresso_price = 3.5;
+ float mocha_price = 4.5;
+ float cappucino_price= 5.5;
+ void replenishIngredients(){
+    milk_quantity = 450;
+    water_quantity = 450;
+    coffee_beans_quantity = 450; 
+    printf("\nIngredients replenished:\n");
+    printf("Milk: %d\n", milk_quantity);
+    printf("Water: %d\n", water_quantity);
+     }
+void ordercoffee(){
+    int coffee_choice;
+    printf("please choose a coffee type:\n");
+    printf("1.Espresso(%1.f)\n",3.5);
+    printf("2.Mocha(%1.f).4.5");
+    printf("3.Cappucino(%1.f)\n,5.5");
+    scanf("%d",&coffee_choice);
+    switch (coffee_choice)
+    {
+        case 1 : 
+        printf("you have chosen espresso");
+        break;
+        case 2:
+         printf("you have chosen mocha");
+         break;
+         case 3:
+        printf("you have chosen cappucino");
+        break;
+        default:
+        printf("Invalid option");
+    }
+}
