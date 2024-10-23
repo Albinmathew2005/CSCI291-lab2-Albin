@@ -1,0 +1,204 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int milk_quantity = 250;
+int water_quantity = 150;
+int coffee_beans_quantity = 250;
+int choco_syrup_quantity = 250;
+
+const int MIN_THRESHOLD = 10;
+
+float espresso_price = 3.5;
+float mocha_price = 4.5;
+float cappuccino_price = 5.5;
+
+float espresso_water = 30;
+float espresso_coffee_beans = 8;
+
+float mocha_water = 39;
+float mocha_milk = 70;
+float mocha_coffee_beans = 8;
+float mocha_choco_syrup = 30;
+
+float cappuccino_water = 30;
+float cappuccino_milk = 70;
+float cappuccino_coffee_beans =8;
+float cappuccino_choco_syrup = 10;
+
+float admin_pass = 1234;
+
+void displayCoffeeMenu() {
+    printf("Coffee Machine\n");
+
+    if (water_quantity >= espresso_water && coffee_beans_quantity >= espresso_coffee_beans) {
+        printf("1. Espresso (%.1f)\n", espresso_price);
+    } else {
+        printf("1. Espresso (%.1f) - Unavailable due to temporarirly insufficent ingredients\n", espresso_price);
+    }
+   
+    if (water_quantity >= mocha_water && milk_quantity >= mocha_milk && coffee_beans_quantity >= mocha_coffee_beans && choco_syrup_quantity >= mocha_choco_syrup) {
+        printf("2. Mocha (%.1f)\n", mocha_price);
+    } else {
+        printf("2. Mocha (%.1f) - Unavailable due to insufficient temporarily ingredients\n", mocha_price);
+    }
+
+    if (water_quantity >= cappuccino_water && milk_quantity >= cappuccino_milk && coffee_beans_quantity >= cappuccino_coffee_beans && choco_syrup_quantity >= cappuccino_choco_syrup) {
+        printf("3. Cappuccino (%.1f)\n", cappuccino_price);
+    } else {
+        printf("3. Cappuccino (%.1f) - Unavailable due to temporarily insufficient ingredients\n", cappuccino_price);
+    }
+
+}
+int coffee_type;
+void updateIngredients() {
+    if (coffee_type == 1) {
+        water_quantity = espresso_water-water_quantity;
+        coffee_beans_quantity = espresso_coffee_beans-coffee_beans_quantity;
+    } else if (coffee_type == 2) {
+        water_quantity = mocha_water-water_quantity;
+        milk_quantity = mocha_milk-milk_quantity;
+        coffee_beans_quantity = mocha_coffee_beans-coffee_beans_quantity;
+        choco_syrup_quantity = mocha_choco_syrup-choco_syrup_quantity;
+    } else if (coffee_type == 3) {
+        water_quantity = cappuccino_water-water_quantity;
+        milk_quantity = cappuccino_milk-milk_quantity;
+        coffee_beans_quantity = cappuccino_coffee_beans-coffee_beans_quantity;
+        choco_syrup_quantity = cappuccino_choco_syrup-choco_syrup_quantity;
+    }
+}
+float price;
+void PrPayment() {
+    float amount_paid = 0;
+    float coin;
+
+    printf("Please insert coins (1 dh or 0.5 dh):\n");
+
+    while (amount_paid < price) {
+        scanf("%f", &coin);
+
+        if (coin == 1 || coin == 0.5) {
+            amount_paid = coin+amount_paid;
+            printf("Inserted: %.1f dh, Total paid: %.1f dh\n", coin, amount_paid);
+        } else {
+            printf("Invalid coin.\n");
+        }
+    }
+
+    printf("Total amount paid: %.1f dh\n", amount_paid);
+}
+
+void orderCoffee() {
+    int coffee_choice;
+
+    while (1) {
+        displayCoffeeMenu();
+
+        printf("Please choose a coffee type (1-3) ");
+        scanf("%d", &coffee_choice);
+
+        
+        if (coffee_choice == 1 && water_quantity >= espresso_water && coffee_beans_quantity >= espresso_coffee_beans) {
+            printf("You selected Espresso. Price: %.1f dh\n", espresso_price);
+        } else if (coffee_choice == 2 && water_quantity >= mocha_water && milk_quantity >= mocha_milk && coffee_beans_quantity >= mocha_coffee_beans && choco_syrup_quantity >= mocha_choco_syrup) {
+            printf("You selected Mocha. Price: %.1f dh\n", mocha_price);
+        } else if (coffee_choice == 3 && water_quantity >= cappuccino_water && milk_quantity >= cappuccino_milk && coffee_beans_quantity >= cappuccino_coffee_beans && choco_syrup_quantity >= cappuccino_choco_syrup) {
+            printf("You selected Cappuccino. Price: %.1f dh\n", cappuccino_price);
+        } else {
+            printf("Invalid selection. \n");
+            continue;
+        }
+
+   
+if (coffee_choice == 1) {
+    price = espresso_price;
+} else if (coffee_choice == 2) {
+    price = mocha_price;
+} else {
+    price = cappuccino_price;
+}
+       PrPayment(price);
+
+        updateIngredients(coffee_choice);
+
+ 
+        if (milk_quantity <= MIN_THRESHOLD) {
+            printf("Alert: Milk quantity is below \n");
+        }
+        if (water_quantity <= MIN_THRESHOLD) {
+            printf("Alert: Water quantity is below \n");
+        }
+        if (coffee_beans_quantity <= MIN_THRESHOLD) {
+            printf("Alert: Coffee beans quantity is below\n");
+        }
+        if (choco_syrup_quantity <= MIN_THRESHOLD) {
+            printf("Alert: Choco syrup quantity is below !\n");
+        }
+    }
+}
+
+void replenishIngredients() {
+    milk_quantity = 50 + 150; 
+    water_quantity = 50 + 150; 
+    coffee_beans_quantity = 50 + 150;  
+    choco_syrup_quantity = 50 + 150; 
+    printf("Ingredients replenished \n");
+}
+
+void changePrices() {
+    printf("Current prices:\n");
+    printf("Espresso: %.1f dh\n", espresso_price);
+    printf("Mocha: %.1f dh\n", mocha_price);
+    printf("Cappuccino: %.1f dh\n", cappuccino_price);
+
+    printf("\nEnter new price for Espresso: ");
+    scanf("%f", &espresso_price);
+    printf("Enter new price for Mocha: ");
+    scanf("%f", &mocha_price);
+    printf("Enter new price for Cappuccino: ");
+    scanf("%f", &cappuccino_price);
+
+    printf("Prices updated successfully!\n");
+}
+
+void mainMenu() {
+    int choice;
+    while (1) {
+        printf("Coffee Maker Machine Menu \n");
+        printf("1. Order Coffee\n");
+        printf("2. Admin Mode \n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                orderCoffee();
+                break;
+            case 2: {
+                int admin_choice;
+                printf("\nAdmin Mode \n");
+                printf("1. Replenish Ingredients\n");
+                printf("2. Change Coffee Prices\n");
+                printf("3. Exit\n");
+                printf("Enter your choice: ");
+                scanf("%d", &admin_choice);
+                if (admin_choice == 1) {
+                    replenishIngredients();
+                } else if (admin_choice == 2) {
+                    changePrices();
+                }
+                break;
+            }
+            case 3:
+                printf("Exiting n");
+                exit(0);
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+}
+
+int main() {
+    mainMenu();
+    return 0;
+}
