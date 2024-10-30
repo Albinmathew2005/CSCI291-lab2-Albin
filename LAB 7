@@ -1,0 +1,20 @@
+#include<stdio.h> 
+#include <stdbool.h> 
+#define SIZE 24
+#define nRows 8
+#define nCols 3
+// PROTOTYPES
+bool isValid(const int arr[],int length, int pos);
+void remove_element(int arr[],int length, int pos);
+int main(){
+    int arr[SIZE];
+    for (int = i, i<SIZE, i++){
+        arr[i]=i
+    }
+    int arr2d[nRows][nCols];
+    int no=20;
+    if(isValid(arr,SIZE,no)){
+        printf("pos is in the given range");
+    
+}
+}
