@@ -1,0 +1,19 @@
+#include <stdio.h>
+int main() {
+    FILE* fptr;
+    FILE* fle;
+
+    char content[1000];
+
+    fle = fopen("data.txt", "r");
+    fptr = fopen("new.txt" , "w");
+    if (fle != NULL) 
+    {
+        printf("  opened file \n");
+        }
+        else 
+        {
+        printf(" file is not open");
+    }
+
+return 0;
